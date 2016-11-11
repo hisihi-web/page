@@ -1,158 +1,158 @@
 /**
- * Created by hisihi on 2016/11/9.
+ * Created by panxiao on 2016/11/9.
  */
 (function ($) {
 
     $.fn.extend({
         "page":function(options){
             //do something
-            var opts = $.extend({}, defaluts, options); //Ê¹ÓÃjQuery.extend ¸²¸Ç²å¼şÄ¬ÈÏ²ÎÊı
-            return this.each (function (){  //ÕâÀïµÄthis¾ÍÊÇjquery¶ÔÏó£¬ÕâÀïreturnÊÇÎªÁËÖ§³ÖÁ´Ê½µ÷ÓÃ
-            // ±éÀúËùÓĞĞèÒªÕ¹Ê¾µÄdom£¬µ±µ÷ÓÃpage()²å¼şµÄÊÇÒ»¸ö¼¯ºÏµÄÊ±ºò
-                    var $this = $(this),//»ñÈ¡µ±Ç°domµÄjquery¶ÔÏó£¬ÕâÀïµÄthisÊÇµ±Ç°Ñ­»·µÄdom
+            var opts = $.extend({}, defaluts, options); //ä½¿ç”¨jQuery.extend è¦†ç›–æ’ä»¶é»˜è®¤å‚æ•°
+            return this.each (function (){  //è¿™é‡Œçš„thiså°±æ˜¯jqueryå¯¹è±¡ï¼Œè¿™é‡Œreturnæ˜¯ä¸ºäº†æ”¯æŒé“¾å¼è°ƒç”¨
+                    // éå†æ‰€æœ‰éœ€è¦å±•ç¤ºçš„domï¼Œå½“è°ƒç”¨page()æ’ä»¶çš„æ˜¯ä¸€ä¸ªé›†åˆçš„æ—¶å€™
+                    var $this = $(this),//è·å–å½“å‰domçš„jqueryå¯¹è±¡ï¼Œè¿™é‡Œçš„thisæ˜¯å½“å‰å¾ªç¯çš„dom
                         len = opts.totalPages,
                         num = opts.liNums,
-                        active = opts.activeClass,
+                        select = opts.selectClass,
                         str = '',
                         str1='',
+                        strPrv = '',
+                        strFirst = '',
+                        strNext='',
+                        strLP='',
                         list='',
                         i;
-                    //Ä¬ÈÏµÚÒ»Ò³ÊÇÑ¡ÖĞ×´Ì¬
-                    str1 = '<li><a href="javascript:" class="'+ active +'">1</a></li>';
-                    //ÅĞ¶Ï×ÜÒ³ÊıÊÇ·ñºÏ·¨
+                    //é»˜è®¤ç¬¬ä¸€é¡µæ˜¯é€‰ä¸­çŠ¶æ€
+                    str1 ='<li><a href="javascript:" class="'+ select +'">1</a></li>';
+                    //åˆ¤æ–­æ€»é¡µæ•°æ˜¯å¦åˆæ³•
+                    //å½“é¡µé¢æ•°å°äºåˆ†é¡µæ•°ï¼Œæ’é™¤ç¬¬ä¸€é¡¹
+                    //æ’é™¤ç¬¬ä¸€é¡µ
                     if (len > 1 && len < num+1) {
-                        //´ÓµÚ¶şÒ³¿ªÊ¼Ñ­»·Ôö¼ÓÒ³Ãæ£¬Ê¼ÖÕÄ¬ÈÏÕ¹Ê¾ÓĞµÚÒ»Ò³
                         for (i = 2; i < len + 1; i++) {
                             str += '<li><a href="javascript:">' + i + '</a></li>';
                         }
+                    //å½“æ€»é¡µé¢å¤§äºé¡µé¢æ•°å¾ªç¯
                     }else if(len > num){
                         for (i = 2; i < num + 1; i++) {
                             str += '<li><a href="javascript:">' + i + '</a></li>';
                         }
                     }
-                    //ÅĞ¶ÏÊÇ·ñ´æÔÚºóÒ»Ò³°´Å¥£¬Èç¹ûÓĞ£¬ÔòÕ¹Ê¾Ä©Ò³°´Å¥
-                    if(opts.hasNext){
-                        list +='<div class="next-page">'+ opts.next+ '</div>';
-                    }
-                    //ÅĞ¶ÏÊÇ·ñÓĞÄ©Ò³°´Å¥
-                    if(opts.hasLastPage){
-                        list +='<div class="last-btn">' + opts.lastPage + '</div>';
-                    }
-                    //½«Ä¬ÈÏÕ¹Ê¾µÄµÚÒ»Ò³ºÍÊ£ÓàÒ³ÃæÆ´½ÓÆğÀ´
-                    list  +='<ul class="page-list">'+ str1 + str +'</ul>';
-                    //ÅĞ¶ÏÒ³ÃæÊÇ·ñÓĞÊ×Ò³°´Å¥
-                    if(opts.hasFirstPage){
-                        list +='<div class="first-btn">'+ opts.firstPage +'</div>';
-                    }
-                    //ÅĞ¶ÏÒ³ÃæÊÇ·ñÓĞÇ°Ò»Ò³°´Å¥
+                    //åˆ¤æ–­é¡µé¢æ˜¯å¦æœ‰å‰ä¸€é¡µæŒ‰é’®
                     if(opts.hasPrv) {
-                        list +='<div class="first-btn">'+ opts.page +'</div>';
+                        strPrv ='<li><div class="first-sec">'+ opts.prv +'</div></li>';
+                    }
+                    //åˆ¤æ–­æ˜¯å¦å­˜åœ¨åä¸€é¡µæŒ‰é’®ï¼Œå¦‚æœæœ‰ï¼Œåˆ™å±•ç¤ºæœ«é¡µæŒ‰é’®
+                    if(opts.hasNext){
+                        strNext ='<li><div class="last-sec">'+ opts.next+ '</div></li>';
+                    }
+                    //åˆ¤æ–­é¡µé¢æ˜¯å¦æœ‰é¦–é¡µæŒ‰é’®
+                    if(opts.hasFirstPage){
+                        strFirst ='<li><div class="first-btn">'+ opts.firstPage +'</div></li>';
+                    }
+                    //åˆ¤æ–­æ˜¯å¦æœ‰æœ«é¡µæŒ‰é’®
+                    if(opts.hasLastPage){
+                        strLP ='<li><div class="last-btn">' + opts.lastPage + '</div></li>';
                     }
 
-                    $this.html(list).off("click");//·ÀÖ¹²å¼şÖØ¸´µ÷ÓÃÊ±£¬ÖØ¸´°ó¶¨ÊÂ¼ş
+                    //å°†é»˜è®¤å±•ç¤ºçš„ç¬¬ä¸€é¡µå’Œå‰©ä½™é¡µé¢æ‹¼æ¥èµ·æ¥
+                    list  = '<ul class="page-list">' + strPrv + strFirst + str1 + str + strLP + strNext +'</ul>';
 
-                    $this.on('click', '.next', function () {
-                        var pageshow = parseInt($('.' + active).html()),
-                            nums, flag,
-                            a = num % 2;
+
+                    $this.html(list).off("click");//é˜²æ­¢æ’ä»¶é‡å¤è°ƒç”¨æ—¶ï¼Œé‡å¤ç»‘å®šäº‹ä»¶
+
+                    //ç‚¹å‡»è·³è½¬æŒ‡å®šé¡µé¢
+                    //è·³è½¬é¡µé¢æ•°å­—å˜åŒ–é¢œè‰²å˜åŒ–
+                    $this.on('click','li',function () {
+                        var  str ='';
+                        str ='<div class=""></div>';
+
+                        return str;
+                    });
+
+                    //ç‚¹å‡»åä¸€é¡µæŒ‰é’®ï¼Œè§¦å‘è·³è½¬å‰ä¸€é¡µäº‹ä»¶
+                    //$this.on('click', '.last-sec', function () {
+                    //    var pageshow = parseInt($('.' + select).html()),
+                    //        nums,
+                    //        flag,
+                    //        a = num % 2;
+                    //    //å–ä½™
+                    //    if(a == 0){
+                    //        //å¶æ•°
+                    //        nums = num;
+                    //        flag = true;
+                    //    }else if(a == 1){
+                    //        //å¥‡æ•°
+                    //        nums = (num+1);
+                    //        flag = false;
+                    //    }
+                    //    if(pageshow >= len) {
+                    //        return;
+                    //    }else if(pageshow > 0&&pageshow <= nums/2){
+                    //        //æœ€å‰å‡ é¡¹
+                    //        $('.' + select).removeClass(select).parent().next().find('a').addClass(select);
+                    //    }else if((pageshow > len-nums/2&&pageshow < len&&flag==false)||(pageshow > len-nums/2-1&&pageshow < len&&flag==true)){
+                    //        //æœ€åå‡ é¡¹
+                    //        $('.' + select).removeClass(select).parent().next().find('a').addClass(select);
+                    //    }else{
+                    //        $('.' + select).removeClass(select).parent().next().find('a').addClass(select);
+                    //        //è°ƒç”¨é¡µé¢æ–¹æ³•
+                    //        fpageShow(pageshow+1);
+                    //    }
+                    //    opts.callBack(pageshow+1);
+                    //});
+
+                    //ç‚¹å‡»å‰ä¸€é¡µé¢æŒ‰é’®ï¼Œè§¦å‘è·³è½¬åä¸€é¡µäº‹ä»¶
+                    //$this.on('click', '.first-sec', function () {
+                    //    var pageshow = parseInt($('.' + select).html());
+                    //    var nums = odevity(num);
+                    //    if (pageshow <= 1) {
+                    //        return;
+                    //    }else if((pageshow > 1&&pageshow <= nums/2)||(pageshow > len-nums/2&&pageshow < len+1)){
+                    //        //æœ€å‰å‡ é¡¹æˆ–æœ€åå‡ é¡¹
+                    //        $('.' + select).removeClass(select).parent().prev().find('a').addClass(select);
+                    //    }else {
+                    //        $('.' + select).removeClass(select).parent().prev().find('a').addClass(select);
+                    //        fpageShow(pageshow-1);
+                    //    }
+                    //    opts.callBack(pageshow-1);
+                    //});
+
+                    //é¡µé¢å±•ç¤º
+                    // function fpageShow (){
+                    //
+                    // };
+
+                    //åˆ¤æ–­liNumsçš„å¥‡å¶æ€§
+                    function odevity(n){
+                        var a = n % 2;
                         if(a == 0){
-                            //Å¼Êı
-                            nums = num;
-                            flag = true;
+                            //å¶æ•°
+                            return n;
                         }else if(a == 1){
-                            //ÆæÊı
-                            nums = (num+1);
-                            flag = false;
+                            //å¥‡æ•°
+                            return (n+1);
                         }
-                        if(pageshow >= l) {
-                            return;
-                        }else if(pageshow > 0&&pageshow <= nums/2){
-                            //×îÇ°¼¸Ïî
-                            $('.' + active).removeClass(active).parent().next().find('a').addClass(active);
-                        }else if((pageshow > l-nums/2&&pageshow < l&&flag==false)||(pageshow > l-nums/2-1&&pageshow < l&&flag==true)){
-                            //×îºó¼¸Ïî
-                            $('.' + active).removeClass(active).parent().next().find('a').addClass(active);
-                        }else{
-                            $('.' + active).removeClass(active).parent().next().find('a').addClass(active);
-                            fpageShow(pageshow+1);
-                        }
-                        opts.callBack(pageshow+1);
-                    });
-                    obj.on('click', '.prv', function () {
-                        var pageshow = parseInt($('.' + active).html());
-                        var nums = odevity(n);
-                        if (pageshow <= 1) {
-                            return;
-                        }else if((pageshow > 1&&pageshow <= nums/2)||(pageshow > l-nums/2&&pageshow < l+1)){
-                            //×îÇ°¼¸Ïî»ò×îºó¼¸Ïî
-                            $('.' + active).removeClass(active).parent().prev().find('a').addClass(active);
-                        }else {
-                            $('.' + active).removeClass(active).parent().prev().find('a').addClass(active);
-                            fpageShow(pageshow-1);
-                        }
-                        opts.callBack(pageshow-1);
-                    });
+                    };
 
-                    obj.on('click', '.first', function(){
-                        var activepage = parseInt($('.' + active).html());
-                        if (activepage <= 1){
-                            return
-                        }//µ±Ç°µÚÒ»Ò³
-                        opts.callBack(1);
-                        fpagePrv(0);
-                    });
-                    obj.on('click', '.last', function(){
-                        var activepage = parseInt($('.' + active).html());
-                        if (activepage >= l){
-                            return;
-                        }//µ±Ç°×îºóÒ»Ò³
-                        opts.callBack(l);
-                        if(l>n){
-                            fpageNext(n-1);
-                        }else{
-                            fpageNext(l-1);
-                        }
-                    });
 
-                    obj.on('click', 'li', function(){
-                        var $this = $(this);
-                        var pageshow = parseInt($this.find('a').html());
-                        var nums = odevity(n);
-                        opts.callBack(pageshow);
-                        if(l>n){
-                            if(pageshow > l-nums/2&&pageshow < l+1){
-                                //×îºó¼¸Ïî
-                                fpageNext((n-1)-(l-pageshow));
-                            }else if(pageshow > 0&&pageshow < nums/2){
-                                //×îÇ°¼¸Ïî
-                                fpagePrv(pageshow-1);
-                            }else{
-                                fpageShow(pageshow);
-                            }
-                        }else{
-                            $('.' + active).removeClass(active);
-                            $this.find('a').addClass(active);
-                        }
-                    });
 
                 }
             )}
     });
 
     var defaluts = {
-        totalPages: 9,//×ÜÒ³Êı
-        liNums: 9,//·ÖÒ³µÄÊı×Ö°´Å¥Êı(½¨ÒéÈ¡ÆæÊı)
-        activeClass: 'active' ,//activeÀà
-        firstPage: 'Ê×Ò³',//Ê×Ò³°´Å¥Ãû³Æ
-        lastPage: 'Ä©Ò³',//Ä©Ò³°´Å¥Ãû³Æ
-        prv: '?',//Ç°Ò»Ò³°´Å¥Ãû³Æ
-        next: '?',//ºóÒ»Ò³°´Å¥Ãû³Æ
-        hasFirstPage: true,//ÊÇ·ñÓĞÊ×Ò³°´Å¥
-        hasLastPage: true,//ÊÇ·ñÓĞÄ©Ò³°´Å¥
-        hasPrv: true,//ÊÇ·ñÓĞÇ°Ò»Ò³°´Å¥
-        hasNext: true,//ÊÇ·ñÓĞºóÒ»Ò³°´Å¥
+        totalPages: 15,//æ€»é¡µæ•°
+        liNums: 5,//åˆ†é¡µå±•ç¤ºå¤šå°‘é¡µ(å»ºè®®å–å¥‡æ•°)
+        selectClass: 'select' ,//selecté€‰ä¸­
+        firstPage: 'é¦–é¡µ',//é¦–é¡µæŒ‰é’®åç§°
+        lastPage: 'æœ«é¡µ',//æœ«é¡µæŒ‰é’®åç§°
+        prv: 'ã€Š',//å‰ä¸€é¡µæŒ‰é’®åç§°
+        next: 'ã€‹',//åä¸€é¡µæŒ‰é’®åç§°
+        hasFirstPage: false,//æ˜¯å¦æœ‰é¦–é¡µæŒ‰é’®
+        hasLastPage: false,//æ˜¯å¦æœ‰æœ«é¡µæŒ‰é’®
+        hasPrv: false,//æ˜¯å¦æœ‰å‰ä¸€é¡µæŒ‰é’®
+        hasNext: false,//æ˜¯å¦æœ‰åä¸€é¡µæŒ‰é’®
         callBack : function(page){
-            //»Øµô£¬pageÑ¡ÖĞÒ³Êı
+            //å›æ‰ï¼Œpageé€‰ä¸­é¡µæ•°
         }
     };
 
