@@ -9,7 +9,7 @@ a {
     display: block;
     color: #212121;
 }
-.page {
+.page,.page1 {
     width:100%;
     height: 40px;
     text-align: center;

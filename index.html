@@ -3,6 +3,7 @@
 <head>
 	<script src="lib/jquery-3.0.0.min.js" type="application/javascript"></script>
 	<script src="page.js" type="text/javascript"></script>
+	<script src="page1.js" type="text/javascript"></script>
 	<link rel="stylesheet" type="text/css" href="page.css">
 	<title>分页插件</title>
 </head>
@@ -20,13 +21,21 @@
 		<!--<div class="clear"></div>-->
 	<!--</ul>-->
 </div>
+<div class="page1"></div>
+<div class="curentPage"></div>
 </body>
 <script type="text/javascript">
 	$(function() {
 		//最简单调用方法,带参数的调用方法
-		//$(".page").page();
 		$(".page").page({
 			total: 300
+		});
+		$(".page1").page1({
+			recordsCount: 168,
+			perPageCount:20,
+			callBack:function(num){
+				$('.curentPage').text(num);
+			}
 		});
 	});
 </script>
