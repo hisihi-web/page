@@ -4,11 +4,12 @@
 (function ($) {
     $.fn.extend({
         "page1": function (options) {
-            var opts = $.extend({}, defaluts, options); //Ê¹ÓÃjQuery.extend ¸²¸Ç²å¼şÄ¬ÈÏ²ÎÊı
-            return this.each (function () {  //ÕâÀïµÄthis¾ÍÊÇjquery¶ÔÏó£¬ÕâÀïreturnÊÇÎªÁËÖ§³ÖÁ´Ê½µ÷ÓÃ
+            var opts = $.extend({}, defaluts, options); //ä½¿ç”¨jQuery.extend è¦†ç›–æ’ä»¶é»˜è®¤å‚æ•°
+            return this.each (function () {  //è¿™é‡Œçš„thiså°±æ˜¯jqueryå¯¹è±¡ï¼Œè¿™é‡Œreturnæ˜¯ä¸ºäº†æ”¯æŒé“¾å¼è°ƒç”¨
                 var $this=$(this);
                 init();
                 function getTotalPageCount(){
+                    //è¿›è¡Œæ•°å­—è¿ç®—ï¼Œ
                     var count=opts.recordsCount/opts.perPageCount;
                     count=Math.ceil(count);
                     return count;
@@ -47,9 +48,9 @@
     });
 
     var defaluts = {
-        recordsCount: 0,//×ÜÒ³Êı
-        perPageCount: 20,//·ÖÒ³Õ¹Ê¾¶àÉÙÒ³(½¨ÒéÈ¡ÆæÊı)
-        selectClass: 'select' ,//selectÑ¡ÖĞ
+        recordsCount: 190,//æ€»é¡µæ•°
+        perPageCount: 20,//åˆ†é¡µå±•ç¤ºå¤šå°‘é¡µ(å»ºè®®å–å¥‡æ•°)
+        selectClass: 'select' ,//selecté€‰ä¸­
         callBack : null
     };
 })(jQuery);;
