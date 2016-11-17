@@ -8,21 +8,8 @@
 	<title>分页插件</title>
 </head>
 <body>
-<div class="page">
-	<!--<ul class="page-list">-->
-		<!--<li><div class="section sec">《</div></li>-->
-		<!--<li><div class="section btn">首页</div></li>-->
-		<!--<li><a href="javascript:" class="select">1</a></li>-->
-		<!--<li><a href="javascript:">2</a></li>-->
-		<!--<li><a href="javascript:">3</a></li>-->
-		<!--<li><a href="javascript:">4</a></li>-->
-		<!--<li><div class="section sec">末页</div></li>-->
-		<!--<li><div class="section btn">》</div></li>-->
-		<!--<div class="clear"></div>-->
-	<!--</ul>-->
-</div>
+<div class="page"></div>
 <div class="page1"></div>
-<div class="currentPage"></div>
 </body>
 <script type="text/javascript">
 	$(function() {
@@ -31,12 +18,23 @@
 			total: 300
 		});
 		$(".page1").page1({
-			recordsCount: 10,
-			perPageCount:2,
+			recordsCount: 15,
+			perPageCount:2
 			callBack:function(num){
-				$('.curentPage').text(num);
+				getDataByPageIndex(num);
 			}
 		});
+
+
+
+		// 内部方法调用
+		function getDataByPageIndex(index) {
+			$.post('http://123',{pageIndex:index,perPageCount:2},function(result) {
+				result;
+				// body...
+			});
+		}
+
 	});
 </script>
 </html>
